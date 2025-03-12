@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import spectr.java_group.OrganizerProject.db.UserRepository;
-import spectr.java_group.OrganizerProject.entities.User;
+import spectr.java_group.OrganizerProject.user.UserRepository;
+import spectr.java_group.OrganizerProject.user.User;
 
 import java.util.Collections;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package spectr.java_group.OrganizerProject.entities;
+package spectr.java_group.OrganizerProject.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +11,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String email;
     private String password;
 

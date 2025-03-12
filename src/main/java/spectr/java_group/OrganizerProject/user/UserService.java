@@ -1,8 +1,7 @@
-package spectr.java_group.OrganizerProject.db;
+package spectr.java_group.OrganizerProject.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spectr.java_group.OrganizerProject.entities.User;
 
 import java.util.List;
 

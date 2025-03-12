@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import spectr.java_group.OrganizerProject.entities.User;
-import spectr.java_group.OrganizerProject.db.UserService;
+import spectr.java_group.OrganizerProject.user.User;
+import spectr.java_group.OrganizerProject.user.UserService;
 
 import java.util.Map;
 
