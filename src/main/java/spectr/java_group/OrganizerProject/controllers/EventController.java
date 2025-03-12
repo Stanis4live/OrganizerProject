@@ -24,6 +24,41 @@ public class EventController {
     @Autowired
     private UserRepository userRepository;
 
+    @GetMapping("/{id}")
+    public  ResponseEntity<Event> getEventById(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails){
+        Optional<Event> event = eventService.getElementById(id);
+
+        if (event.isEmpty() || !event.get().getUser().getEmail().equals(userDetails.getUsername())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(event.get());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateEvent(@PathVariable Long id,
+                                              @AuthenticationPrincipal UserDetails userDetails,
+                                              @RequestBody Event updateEvent){
+        Optional<Event> existingEventOpt =eventService.getElementById(id);
+
+        if (existingEventOpt.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event not found");
+        }
+
+        Event existingEvent = existingEventOpt.get();
+
+        if (!existingEvent.getUser().getEmail().equals(userDetails.getUsername())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        existingEvent.setTitle(updateEvent.getTitle());
+        existingEvent.setDescription(updateEvent.getDescription());
+        existingEvent.setDateTime(updateEvent.getDateTime());
+
+        eventService.addEvent(existingEvent);
+        return ResponseEntity.ok("Event updated successfully");
+    }
+
     @GetMapping
     public ResponseEntity<List<Event>> getUserEvents(@AuthenticationPrincipal UserDetails userDetails){
         if (userDetails == null){
@@ -56,5 +91,23 @@ public class EventController {
         eventService.addEvent(event);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Event created successfully.");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteEvent(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails){
+        Optional<Event> existingEventOpt = eventService.getElementById(id);
+
+        if (existingEventOpt.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event not found");
+        }
+
+        Event existingEvent = existingEventOpt.get();
+
+        if (!existingEvent.getUser().getEmail().equals(userDetails.getUsername())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        eventService.deleteEvent(id);
+        return ResponseEntity.ok("Event deleted successfully");
     }
 }
