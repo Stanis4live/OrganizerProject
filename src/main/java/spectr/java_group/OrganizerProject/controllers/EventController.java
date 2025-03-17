@@ -77,16 +77,19 @@ public class EventController {
     @PostMapping
     public ResponseEntity<String> addEvent(@AuthenticationPrincipal UserDetails userDetails,
                                            @RequestBody Event event){
+        System.out.println("User details" + userDetails);
         if (userDetails == null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         Optional<User> userOptional = userRepository.findByEmail(userDetails.getUsername());
+        System.out.println("User optional" + userOptional);
         if (userOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         User user = userOptional.get();
+        System.out.println("Event!!!!" + event);
         event.setUser(user);
         eventService.addEvent(event);
 
