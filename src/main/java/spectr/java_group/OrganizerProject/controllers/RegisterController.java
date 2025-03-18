@@ -27,7 +27,6 @@ public class RegisterController {
             return ResponseEntity.badRequest().body("Email already registered");
         }
         userService.addUser(new User(email, passwordEncoder.encode(password)));
-        System.out.println("yes");
         return ResponseEntity.ok("Registration success");
         }
 }

@@ -45,7 +45,6 @@ public class LoginController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtUtil.generateToken(userDetails);
-            System.out.println("TOKEN!!!" + token);
 
             return ResponseEntity.ok(Map.of("token", token));
         } catch (Exception e) {
