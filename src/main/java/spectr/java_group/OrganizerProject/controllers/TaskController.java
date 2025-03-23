@@ -87,6 +87,7 @@ public class TaskController {
 
         User user = userOptional.get();
         task.setUser(user);
+        task.setDone(false);
         taskService.addTask(task);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Task created successfully.");
@@ -108,5 +109,24 @@ public class TaskController {
 
         taskService.deleteTask(id);
         return ResponseEntity.ok("Task deleted successfully");
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> toggleStatusTask(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails){
+        Optional<Task> existingTaskOpt = taskService.getElementById(id);
+
+        if (existingTaskOpt.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
+        }
+
+        Task existingTask = existingTaskOpt.get();
+
+        if (!existingTask.getUser().getEmail().equals(userDetails.getUsername())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        existingTask.setDone(!existingTask.getDone());
+        taskService.addTask(existingTask);
+        return ResponseEntity.ok("Task updated successfully");
     }
 }
