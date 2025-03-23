@@ -23,6 +23,7 @@ public class SecurityConfig {
                     config.addAllowedOrigin("http://localhost:8899");
                     config.addAllowedOrigin("http://202.182.126.241:8899");
                     config.addAllowedOrigin("http://stanis4live.su");
+                    config.addAllowedOrigin("https://stanis4live.su");
                     config.addAllowedMethod("*");
                     config.addAllowedHeader("*");
                     return config;
